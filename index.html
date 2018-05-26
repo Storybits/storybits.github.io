@@ -5,38 +5,24 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <style type="text/css">
 html { overflow: hidden; }
-body { overflow: hidden; padding: 0; margin: 0;
-width: 100%; height: 100%; font-family: Trebuchet MS, Trebuchet, Arial, sans-serif; }
-#map { position: absolute; top: 10px; left: 10px; right: 10px; bottom: 15px; overflow: auto; }
-#footer { position: absolute; bottom: 0px; left: 0px; width:100%; height: 12px; overflow: hidden; }
-@media screen and (max-width: 600px) {
+body { overflow: hidden; padding: 0; margin: 0; background: #000;
+width: 100%; height: 100%; font-family: sans-serif, Arial; }
+#map { position: absolute; top: 0px; left: 0px; right: 0px; bottom: 15px; overflow: auto; background-color: #000;}
+@media screen and (max-width: 100%) {
   #map { top:0px; left:0px; width:100%; height:100%;}
 }
-body { background: #f4f4f4;}
+#footer { position: absolute; bottom: 0px; left: 0px; width:100%; height: 12px; overflow: hidden;text-align:center; font-size:9px; color:#CECECE;}
 #header { background: #fff; box-shadow: 0 1px 3px #CCC; border: 1px solid #ccc; }
 #header h1 { padding:7px 10px; margin:0; font-size: 28px; }
-#map { border: 1px solid #ccc; box-shadow: 0 1px 3px #CCC; background-color: #DEDCD7;}
-#footer { text-align:center; font-size:9px; color:#606060; }
-</style>
-<!--[if lte IE 6]>
-<style type="text/css">
-#map {
-    height:expression(document.body.clientHeight-35); /* 10+10+15=35 */
-    width:expression(document.body.clientWidth-20); /* 10+10=20 */
-}
-</style>
-<![endif]-->
 
-<!-- if you redistribute this please change the key //-->
+</style>
+<!-- If you redistribute this, please change the Google Maps key. Thank you! //-->
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyBHItYW-EU6WocigJgmuqDdRg_kQLx0YpI&sensor=false"></script>
-<!-- Get your Google Maps API Key: https://developers.google.com/maps/documentation/javascript/tutorials/adding-a-google-map#introduction-->
-<!-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=YOUR_API_KEY&sensor=false"></script> -->
 <script type="text/javascript">
 var map;
 var mapBounds = new google.maps.LatLngBounds(
     new google.maps.LatLng(-85.051129, -180.000000),
     new google.maps.LatLng(85.051129, 179.996656));
-
 
 var mapMinZoom = 2;
 var mapMaxZoom = 6;
@@ -54,15 +40,16 @@ var blessOnlineMap = new google.maps.ImageMapType({
         var y = coord.y;
         
         if (mapBounds.intersects(tileBounds) && (mapMinZoom <= zoom) && (zoom <= mapMaxZoom)) {
-            console.log(zoom + "/" + x + "-" + y + ".jpg");
             return zoom + "/" + x + "-" + y + ".jpg";
         }
         else
         {
             if (zoom > mapMaxZoom){
                 map.setZoom(mapMaxZoom);
+
             } else if (zoom < mapMinZoom) {
                 map.setZoom(mapMinZoom);
+                map.center = new google.maps.LatLng(-0.000000, -0.001672);
             }
         }
     },
@@ -79,18 +66,21 @@ function init() {
         streetViewControl: false,
         center: new google.maps.LatLng(-0.000000, -0.001672),
         zoom: 2,
-        max: 2,
-        mapMaxZoom: 6
+        minZoom: mapMinZoom,
+        max: mapMaxZoom,
+        zoomControl: true,
+        scaleControl: true,
+        rotateControl: false,
+        fullscreenControl: true
     };
     map = new google.maps.Map(document.getElementById("map"), opts);
     map.setMapTypeId('Bless');
     map.overlayMapTypes.insertAt(0, blessOnlineMap);
 }
 </script>
-<style type="text/css"></style>
 </head>
 <body onload="init()">
-<div id="footer">Rendered by Radarblip, screenshots by Freelancer</div>
+<div id="footer">Rendered by Radarblip on Google Maps, map created by Freelancer</div>
 <div id="map"  ></div>
 </body>
 </html>
