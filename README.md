@@ -4,4 +4,4 @@ The master image for this map was created by Freelancer (Freelancer#6398 on Disc
 
 Feel free to change or for this.
 
-Any suggestions can be send to Radarblip#4646
+Any suggestions can be send to my Discord on Radarblip#4646
